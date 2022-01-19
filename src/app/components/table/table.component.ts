@@ -21,17 +21,33 @@ export class TableComponent implements OnInit {
     engineering: 'Ingenieria',
     experienceYear: 'Anos de Experiencia'
   };
+  public length: number = 10;
+  public pageSize: number = 10;
+  public pageSizeOptions: number[] = [ 5 , 10, 15];
+  public indexPage: number = 0;
 
   constructor(
     private infoSvc: InfoService
   ) { }
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource<user>(this.getData());
+    this.getData()
   }
 
   getData(){
-    return this.infoSvc.getInfo()
+    let res = this.infoSvc.getInfoPaginated(this.pageSize, this.indexPage)
+    let { length, pageSize, numberPage} = res
+    this.length = length
+    this.pageSize = pageSize
+    this.indexPage = numberPage
+    this.dataSource = new MatTableDataSource<user>(res.data)
+  }
+
+  onChangePage(event: any) {
+    let { pageSize, pageIndex } = event
+    this.pageSize = pageSize
+    this.indexPage = pageIndex
+    this.getData();
   }
 
 }

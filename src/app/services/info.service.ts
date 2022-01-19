@@ -15,13 +15,13 @@ export class InfoService {
 
   getInfoPaginated(pageSize: number, numberPage: number): responsePg {
     let response: user[] = [];
-    if(numberPage == 1){
+    if(numberPage == 0 ){
       for (let index = 0; index < pageSize; index++) {
         const element = infoData[index];
         response.push(element)
       }
     }else{
-      for (let index = pageSize * numberPage - 1; index < pageSize * numberPage; index++) {
+      for (let index = pageSize * numberPage; index < pageSize * (numberPage + 1); index++) {
         const element = infoData[index];
         response.push(element)
       }
