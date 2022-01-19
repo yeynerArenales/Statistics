@@ -7,3 +7,10 @@ export interface user {
     engineering: string,
     experienceYear: number
 }
+
+export interface  responsePg{
+    data: user[],
+    pageSize: number,
+    length: number,
+    numberPage: number
+}
