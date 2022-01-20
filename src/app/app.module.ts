@@ -7,11 +7,13 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TableComponent } from './components/table/table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { BarComponent } from './components/bar/bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TableComponent
+    TableComponent,
+    BarComponent
   ],
   imports: [
     BrowserModule,
