@@ -44,7 +44,7 @@ export class BarComponent implements OnInit {
       yAxis: {},
       series: [
         {
-          name: 'sales',
+          name: 'Años',
           type: 'bar',
           data: values
         }

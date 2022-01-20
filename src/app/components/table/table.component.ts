@@ -19,7 +19,7 @@ export class TableComponent implements OnInit {
     age: 'Edad',
     phoneNumber: 'Numero de Telefono',
     engineering: 'Ingenieria',
-    experienceYear: 'Anos de Experiencia'
+    experienceYear: 'Años de Experiencia'
   };
   public length: number = 10;
   public pageSize: number = 10;
