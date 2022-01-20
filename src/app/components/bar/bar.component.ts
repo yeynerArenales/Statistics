@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as echarts from 'echarts';
+import { InfoService } from 'src/app/services/info.service';
 
 @Component({
   selector: 'app-bar',
@@ -8,25 +9,44 @@ import * as echarts from 'echarts';
 })
 export class BarComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private infoSvc: InfoService
+  ) { }
 
   ngOnInit(): void {
+    this.showGraphic()
+  }
+
+  getInfo() {
+    let data = this.infoSvc.getInfoForChart();
+    return {
+      names: Object.keys(data),
+      values: Object.values(data)
+    }
+  }
+
+  showGraphic() {
+    let { names, values } = this.getInfo()
     var chartDom = document.getElementById('chart')!;
     var myChart = echarts.init(chartDom, 'dark');
     var option = {
+      title: {
+        text: 'Usuarios por Años de experiencia (Usuarios - Años)',
+        left: 'center'
+      },
       tooltip: {},
       legend: {
-        data: ['sales']
+        data: ['']
       },
       xAxis: {
-        data: ['Shirts', 'Cardigans', 'Chiffons', 'Pants', 'Heels', 'Socks']
+        data: names
       },
       yAxis: {},
       series: [
         {
           name: 'sales',
           type: 'bar',
-          data: [5, 20, 36, 10, 10, 20]
+          data: values
         }
       ]
     };
