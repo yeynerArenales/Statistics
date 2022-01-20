@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as echarts from 'echarts';
+import { InfoService } from 'src/app/services/info.service';
 
 @Component({
   selector: 'app-pie',
@@ -8,15 +9,24 @@ import * as echarts from 'echarts';
 })
 export class PieComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private infoSvc: InfoService
+  ) { }
 
   ngOnInit(): void {
+    this.showGraphic()
+  }
 
+  getInfo(){
+    return this.infoSvc.getInfoForPie();
+  }
+
+  showGraphic(){
     var chartDom = document.getElementById('pie')!;
     var myChart = echarts.init(chartDom, 'dark');
     var option = {
       title: {
-        text: 'Referer of a Website',
+        text: 'Usuarios por Ingeniería',
         left: 'center'
       },
       tooltip: {
@@ -29,16 +39,10 @@ export class PieComponent implements OnInit {
       },
       series: [
         {
-          name: 'Access From',
+          name: 'Ingeniería',
           type: 'pie',
           radius: '50%',
-          data: [
-            { value: 1048, name: 'Search Engine' },
-            { value: 735, name: 'Direct' },
-            { value: 580, name: 'Email' },
-            { value: 484, name: 'Union Ads' },
-            { value: 300, name: 'Video Ads' }
-          ],
+          data: this.getInfo(),
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
