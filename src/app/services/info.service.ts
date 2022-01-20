@@ -38,24 +38,29 @@ export class InfoService {
   }
 
   getInfoForPie() {
-    let Informatica: number = 0, Civil: number = 0, Mecanica: number = 0, Industrial: number = 0;
+    let informatica: number = 0, civil: number = 0, mecanica: number = 0, industrial: number = 0;
     infoData.forEach(item => {
       switch (item.engineering) {
         case 'Informatica':
-          Informatica += 1
+          informatica += 1
           break;
         case 'Civil':
-          Civil += 1
+          civil += 1
           break;
         case 'Mecanica':
-          Mecanica += 1
+          mecanica += 1
           break;
         case 'Industrial':
-          Industrial += 1
+          industrial += 1
           break;
       }
     })
-    return { Informatica, Civil, Mecanica, Industrial }
+    return [
+      { name: "Informatica", value: informatica },
+      { name: "Civil", value: civil },
+      { name: "Mecanica", value: mecanica },
+      { name: "Industrial", value: industrial }
+    ]
   }
 
   getInfoPaginated(pageSize: number, numberPage: number): responsePg {
