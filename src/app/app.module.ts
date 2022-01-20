@@ -8,12 +8,14 @@ import { TableComponent } from './components/table/table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BarComponent } from './components/bar/bar.component';
+import { PieComponent } from './components/pie/pie.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TableComponent,
-    BarComponent
+    BarComponent,
+    PieComponent
   ],
   imports: [
     BrowserModule,
