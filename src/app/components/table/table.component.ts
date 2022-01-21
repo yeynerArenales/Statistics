@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { user } from 'src/app/models/models';
-import { InfoService } from 'src/app/services/info.service';  
+import { sortEvent, user } from 'src/app/models/models';
+import { InfoService } from 'src/app/services/info.service';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -23,8 +23,9 @@ export class TableComponent implements OnInit {
   };
   public length: number = 10;
   public pageSize: number = 10;
-  public pageSizeOptions: number[] = [ 5 , 10, 15];
+  public pageSizeOptions: number[] = [5, 10, 15];
   public indexPage: number = 0;
+  public infoData: user[] = [];
 
   constructor(
     private infoSvc: InfoService
@@ -34,13 +35,13 @@ export class TableComponent implements OnInit {
     this.getData()
   }
 
-  getData(){
-    let res = this.infoSvc.getInfoPaginated(this.pageSize, this.indexPage)
-    let { length, pageSize, numberPage} = res
+  getData() {
+    let { length, pageSize, numberPage, data } = this.infoSvc.getInfoPaginated(this.pageSize, this.indexPage)
     this.length = length
     this.pageSize = pageSize
     this.indexPage = numberPage
-    this.dataSource = new MatTableDataSource<user>(res.data)
+    this.infoData = data
+    this.dataSource = new MatTableDataSource<user>(data)
   }
 
   onChangePage(event: any) {
@@ -48,6 +49,36 @@ export class TableComponent implements OnInit {
     this.pageSize = pageSize
     this.indexPage = pageIndex
     this.getData();
+  }
+
+  sortData(event: sortEvent) {
+    console.log(event)
+    if (event.active == 'id' && event.direction == 'asc') {
+      this.infoData = this.infoData.sort((a, b) => {
+        return a.id - b.id;
+      });
+    } else if (event.active == 'id' && event.direction == 'desc') {
+      this.infoData = this.infoData.sort((a, b) => {
+        return b.id - a.id;
+      });
+    }else if (event.active == 'age' && event.direction == 'asc') {
+      this.infoData = this.infoData.sort((a, b) => {
+        return a.age - b.age;
+      });
+    } else if (event.active == 'age' && event.direction == 'desc') {
+      this.infoData = this.infoData.sort((a, b) => {
+        return b.age - a.age;
+      });
+    }else if (event.active == 'experienceYear' && event.direction == 'asc') {
+      this.infoData = this.infoData.sort((a, b) => {
+        return a.experienceYear - b.experienceYear;
+      });
+    } else if (event.active == 'experienceYear' && event.direction == 'desc') {
+      this.infoData = this.infoData.sort((a, b) => {
+        return b.experienceYear - a.experienceYear;
+      });
+    }
+    this.dataSource = new MatTableDataSource<user>(this.infoData)
   }
 
 }

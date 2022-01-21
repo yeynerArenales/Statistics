@@ -1,5 +1,5 @@
 <div class="table responsive-table">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 colored-rows border-none" matSort>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 colored-rows border-none" matSort (matSortChange)="sortData($event)">
 
         <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnsAliases[column]}} </th>

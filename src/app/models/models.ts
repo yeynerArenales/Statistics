@@ -14,3 +14,8 @@ export interface  responsePg{
     length: number,
     numberPage: number
 }
+
+export interface sortEvent {
+    active: string,
+    direction: string
+}
