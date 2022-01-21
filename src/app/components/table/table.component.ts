@@ -26,6 +26,7 @@ export class TableComponent implements OnInit {
   public pageSizeOptions: number[] = [5, 10, 15];
   public indexPage: number = 0;
   public infoData: user[] = [];
+  public search: string = "";
 
   constructor(
     private infoSvc: InfoService
@@ -61,7 +62,7 @@ export class TableComponent implements OnInit {
       this.infoData = this.infoData.sort((a, b) => {
         return b.id - a.id;
       });
-    }else if (event.active == 'age' && event.direction == 'asc') {
+    } else if (event.active == 'age' && event.direction == 'asc') {
       this.infoData = this.infoData.sort((a, b) => {
         return a.age - b.age;
       });
@@ -69,7 +70,7 @@ export class TableComponent implements OnInit {
       this.infoData = this.infoData.sort((a, b) => {
         return b.age - a.age;
       });
-    }else if (event.active == 'experienceYear' && event.direction == 'asc') {
+    } else if (event.active == 'experienceYear' && event.direction == 'asc') {
       this.infoData = this.infoData.sort((a, b) => {
         return a.experienceYear - b.experienceYear;
       });
@@ -79,6 +80,33 @@ export class TableComponent implements OnInit {
       });
     }
     this.dataSource = new MatTableDataSource<user>(this.infoData)
+  }
+
+  getInfoFilter(filter: string){
+    let { length, pageSize, numberPage, data } = this.infoSvc.getInfoFilter(this.pageSize, this.indexPage, filter)
+    this.length = length
+    this.pageSize = pageSize
+    this.indexPage = numberPage
+    this.infoData = data
+    this.dataSource = new MatTableDataSource<user>(data)
+  }
+
+  debounce(func: any, timeout = 500) {
+    let timer: any;
+    return (...args: any) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+  }
+
+  processSearch = this.debounce(() => this.searchData());
+
+  searchData() {
+    if (this.search == '') {
+      this.getData();
+    } else {
+      this.getInfoFilter(this.search);
+    }
   }
 
 }

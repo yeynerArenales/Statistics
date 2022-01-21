@@ -1,5 +1,9 @@
 <div class="table responsive-table">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 colored-rows border-none" matSort (matSortChange)="sortData($event)">
+    <div class="search-container">
+        <input type="text" matInput placeholder="Buscador" [(ngModel)]="search" (keyup)="processSearch()">
+    </div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 colored-rows border-none" matSort
+        (matSortChange)="sortData($event)">
 
         <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnsAliases[column]}} </th>
@@ -15,7 +19,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-            [pageIndex]="indexPage"  aria-label = "Seleccionar página" (page)="onChangePage($event)">
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [pageIndex]="indexPage"
+        aria-label="Seleccionar página" (page)="onChangePage($event)">
     </mat-paginator>
 </div>

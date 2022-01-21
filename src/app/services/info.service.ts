@@ -83,4 +83,33 @@ export class InfoService {
       numberPage
     };
   }
+
+  getInfoFilter(pageSize: number, numberPage: number, filter: string): responsePg {
+    let response: user[] = [];
+    if (numberPage == 0) {
+      for (let index = 0; index < pageSize; index++) {
+        const element = infoData[index];
+        if (element.name.toLowerCase().includes(filter.toLowerCase())  ||
+          element.lastname.toLowerCase().includes(filter.toLowerCase())  ||
+          element.engineering.toLowerCase().includes(filter.toLowerCase()) ) {
+          response.push(element)
+        }
+      }
+    } else {
+      for (let index = pageSize * numberPage; index < pageSize * (numberPage + 1); index++) {
+        const element = infoData[index];
+        if (element.name.toLowerCase().includes(filter.toLowerCase())  ||
+          element.lastname.toLowerCase().includes(filter.toLowerCase())  ||
+          element.engineering.toLowerCase().includes(filter.toLowerCase()) ) {
+          response.push(element)
+        }
+      }
+    }
+    return {
+      data: response,
+      length: response.length,
+      pageSize,
+      numberPage
+    };
+  }
 }
